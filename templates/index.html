@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Price Predictor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 400px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type=range] {
+            width: 100%;
+        }
+
+        output {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🏠 House Price Prediction</h1>
+
+<div class="container">
+    <form action="/predict" method="post">
+
+        <label>Area (sqft)</label>
+        <input type="number" name="area_sqft"
+               value="{{ form_data.get('area_sqft', '') }}" required>
+
+        <label>Bedrooms</label>
+        <input type="number" name="bedrooms"
+               value="{{ form_data.get('bedrooms', 3) }}" required>
+
+        <label>Bathrooms</label>
+        <input type="number" name="bathrooms"
+               value="{{ form_data.get('bathrooms', 2) }}" required>
+
+        <label>Floors</label>
+        <input type="number" name="floors"
+               value="{{ form_data.get('floors', 2) }}" required>
+
+        <label>Year Built</label>
+        <input type="number" name="year_built"
+               value="{{ form_data.get('year_built', '') }}" required>
+
+        <label>Garage</label>
+        <select name="garage">
+            <option {% if form_data.get('garage') == 'Yes' %}selected{% endif %}>Yes</option>
+            <option {% if form_data.get('garage') == 'No' %}selected{% endif %}>No</option>
+        </select>
+
+        <label>Locality</label>
+        <select name="locality">
+            <option {% if form_data.get('locality') == 'Urban' %}selected{% endif %}>Urban</option>
+            <option {% if form_data.get('locality') == 'Suburban' %}selected{% endif %}>Suburban</option>
+            <option {% if form_data.get('locality') == 'Rural' %}selected{% endif %}>Rural</option>
+        </select>
+
+        <label>Distance to City (km)</label>
+        <input type="number" name="distance_to_city_km"
+               value="{{ form_data.get('distance_to_city_km', '') }}" required>
+
+        <label>School Rating (0–10)</label>
+        <input type="number"
+            name="school_rating"
+            min="0"
+            max="10"
+            step="0.1"
+            value="{{ form_data.get('school_rating', 0) }}"
+            required>
+
+        <label>Renovated</label>
+        <select name="renovated">
+            <option {% if form_data.get('renovated') == 'Yes' %}selected{% endif %}>Yes</option>
+            <option {% if form_data.get('renovated') == 'No' %}selected{% endif %}>No</option>
+        </select>
+
+        <label>Condition</label>
+        <select name="condition">
+            <option {% if form_data.get('condition') == 'Poor' %}selected{% endif %}>Poor</option>
+            <option {% if form_data.get('condition') == 'Average' %}selected{% endif %}>Average</option>
+            <option {% if form_data.get('condition') == 'Good' %}selected{% endif %}>Good</option>
+            <option {% if form_data.get('condition') == 'Excellent' %}selected{% endif %}>Excellent</option>
+        </select>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        💰 Estimated Price: ₹ {{ prediction }} Lakhs
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
