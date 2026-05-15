@@ -19,14 +19,7 @@ The goal is to build a **readable, well-documented notebook** that demonstrates 
 
 ---
 
-## ⏱️ Project Details
 
-- **Duration:** 5–6 Hours  
-- **Date:** April 28, 2026  
-- **Level:** Intermediate  
-- **Total Points:** 60  
-
----
 
 ## 📂 Dataset Description
 
